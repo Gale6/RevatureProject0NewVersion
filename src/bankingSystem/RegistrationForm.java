@@ -1,5 +1,6 @@
 package bankingSystem;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -86,6 +87,19 @@ public class RegistrationForm implements Serializable{
 		} catch (UserNameAlreadyExistException e) {
 			e.getMessage();
 		}
+	}
+	public static void logIntoSystem(RegistrationForm myForm) {
+		try {
+			String path = myForm.getuserName()+"RegistrationForm.ser";
+			WriteObjectToFile.write(myForm, path);
+			ArrayList<String> myArrayList = ReadListFromFile.read("registrationList.txt");
+			myArrayList.add(myForm.getuserName());
+			WriteListToFile.write(myArrayList, "registrationList.txt");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }
