@@ -1,5 +1,6 @@
 package bankingSystem;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -97,6 +98,24 @@ public class RegistrationForm implements Serializable{
 			WriteListToFile.write(myArrayList, "registrationList.txt");
 
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public static void deleteFromSystem(RegistrationForm myForm) {
+		try {
+			//delete file
+			String path = myForm.getuserName()+"RegistrationForm.ser";
+			File targetFile = new File(path);
+			targetFile.delete();
+			
+			//delete from list
+			ArrayList<String> targetArrayList = ReadListFromFile.read("registrationList.txt");
+			targetArrayList.remove(myForm.getuserName());
+			WriteListToFile.write(targetArrayList, "registrationList.txt");
+			
+			System.out.println(myForm.getuserName() + " deleted from system");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

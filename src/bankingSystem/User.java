@@ -1,5 +1,6 @@
 package bankingSystem;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -128,6 +129,27 @@ public class User {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	public static void deleteFromSystem(User myUser) {
+		try {
+		//delete file
+		String path = myUser.name+"User.ser";
+		File targetFile = new File(path);
+		targetFile.delete();
+		
+		//delete from list
+		ArrayList<String> targetArrayList = ReadListFromFile.read("userList.txt");
+		targetArrayList.remove(myUser.name);
+		WriteListToFile.write(targetArrayList, "userList.txt");
+		
+		System.out.println(myUser.name + " deleted from system");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
 		
 	}
 	
