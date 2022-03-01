@@ -1,5 +1,6 @@
 package bankingSystem;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -42,7 +43,6 @@ public class User {
 		
 	}
 	
-	//add negative check
 	public void deposit() {
 		Scanner input = new Scanner(System.in);
 		double depositAmount;
@@ -58,11 +58,45 @@ public class User {
 		history.add(depositHistory);
 		input.close();
 	}
-	
+	//TODO bring up target object
 	public void transfer() {
+		Scanner input = new Scanner(System.in);
+		double transferAmount;
 		
+		do {
+			System.out.println("please enter transfer amount");
+			transferAmount = Double.parseDouble(input.nextLine());
+			if (transferAmount > amount) {
+				System.out.println("Insufficient balance, you can only transfer what you have");
+			}
+		} while (transferAmount > amount);
+		
+		ArrayList<String> existingUserName = ReadListFromFile.read("userList.txt");
+		String targetName;
+		do {
+			System.out.println("please enter the user to want to transfer to");
+			targetName = input.nextLine();
+			if (!existingUserName.contains(targetName)) {
+				System.out.println(targetName + " is not our bank user");
+			}
+		} while (!existingUserName.contains(targetName));
+		
+		User targetObject = (User) ReadObjectFromFile.read(targetName+"User.ser");
+		targetObject.receiveTransfer(transferAmount, name);
+		try {
+			WriteObjectToFile.write(targetObject, targetName+"User.ser");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		this.amount -= transferAmount;
+		String tranferAmountString = String.valueOf(transferAmount);
+		
+		ArrayList<String> transferHistory = new ArrayList<>(Arrays.asList("transfer",tranferAmountString,targetName));
+		history.add(transferHistory);
+		input.close();
 	}
-	public void receiveTransfer() {
+	public void receiveTransfer(double amount, String sender) {
 		
 	}
 
