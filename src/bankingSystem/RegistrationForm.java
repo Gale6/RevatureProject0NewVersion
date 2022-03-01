@@ -43,7 +43,7 @@ public class RegistrationForm implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return ("userName: " + this.userName +" accountType: " + this.accountType + " userType: " + this.userType);
+		return ("userName: " + this.userName + System.getProperty("line.separator")+ "accountType: " + this.accountType + System.getProperty("line.separator") + "userType: " + this.userType);
 	}
 	
 	

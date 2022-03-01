@@ -9,9 +9,14 @@ public class User {
 	public String name = "";
 	private String password = "";
 	
+	public String accountType = "";
+	
 	public double amount = 0;
 	public ArrayList<ArrayList<String>> history = new ArrayList<>();
-	
+	// withdraw history arrayList [withdraw,amount]
+	//deposit history arraryList [deposit,amount]
+	// transfer history arrayList [transfer, amount, target]
+	//Receive history arrayList[receive, amount, sender]
 	
 	public String getPassword() {
 		return password;
@@ -37,13 +42,14 @@ public class User {
 		this.amount -= withdrawAmount;
 		String withdrawAmountString = String.valueOf(withdrawAmount);
 		
-		ArrayList<String> withdrawHistory = new ArrayList<>(Arrays.asList("deposit",withdrawAmountString));
+		ArrayList<String> withdrawHistory = new ArrayList<>(Arrays.asList("withdraw",withdrawAmountString));
 		history.add(withdrawHistory);
 		input.close();
 		
 	}
 	
 	public void deposit() {
+		
 		Scanner input = new Scanner(System.in);
 		double depositAmount;
 		
@@ -60,6 +66,7 @@ public class User {
 	}
 	//TODO bring up target object
 	public void transfer() {
+		
 		Scanner input = new Scanner(System.in);
 		double transferAmount;
 		
@@ -96,8 +103,37 @@ public class User {
 		history.add(transferHistory);
 		input.close();
 	}
-	public void receiveTransfer(double amount, String sender) {
+	public void receiveTransfer(double receivedAmount, String sender) {		
 		
+		this.amount += receivedAmount;
+		String receivedAmountString = String.valueOf(receivedAmount);
+		ArrayList<String> receiveHistory = new ArrayList<>(Arrays.asList("receive",receivedAmountString,sender));
+		history.add(receiveHistory);
+	}
+	
+	public User(RegistrationForm myForm) {
+		this.name = myForm.getuserName();
+		this.setPassword(myForm.getPassward());
+		this.accountType = myForm.accountType;
+	}
+	
+	public static void logIntoSystem(User myUser) {
+		try {
+			String path = myUser.name+"User.ser";
+			WriteObjectToFile.write(myUser, path);
+			ArrayList<String> myArrayList = ReadListFromFile.read("userList.txt");
+			myArrayList.add(myUser.name);
+			WriteListToFile.write(myArrayList, "userList.txt");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public String toString() {
+		return ("userName: " + this.name +System.getProperty("line.separator")+"accountType: " + this.accountType + System.getProperty("line.separator") + "history " + history);
 	}
 
 }
