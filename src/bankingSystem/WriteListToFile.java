@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class WriteListToFile {
 	
-	// gets in a arrayList and create a file at path if it doesn't exist, else just write to it
+	// takes in a arrayList and create a file at path if it doesn't exist, then just write the list to it
 	public static void write(ArrayList<String> listToWrite, String path) throws IOException {
 		
 		File myFile = new File(path);
