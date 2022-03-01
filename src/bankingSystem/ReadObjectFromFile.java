@@ -18,7 +18,10 @@ public class ReadObjectFromFile {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			
 			
-			myObject = ois.readObject();
+			myObject = ois.readObject();			
+			ois.close();
+			fis.close();
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -26,7 +29,6 @@ public class ReadObjectFromFile {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
 		return myObject;
 		
 		
