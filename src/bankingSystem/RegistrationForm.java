@@ -2,6 +2,7 @@ package bankingSystem;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class RegistrationForm implements Serializable{
 
@@ -44,5 +45,47 @@ public class RegistrationForm implements Serializable{
 		return ("userName: " + this.userName +" accountType: " + this.accountType + " userType: " + this.userType);
 	}
 	
+	
+	
+	public RegistrationForm() {
+		
+		try {
+			System.out.println("Welcome to Registraton");
+			System.out.println("Please Enter a userName");
+			Scanner input = new Scanner(System.in);
+			this.setUserName(input.nextLine());
+			System.out.println("Please Enter a password");
+			this.setPassward(input.nextLine());
+			String userIn;
+			do {
+				System.out.println("Enter 1 for user account, 2 for Employee account");
+				userIn = input.nextLine();
+				
+			}while (!userIn.equals("1") &&! userIn.equals("2"));
+			if (userIn.equals("1")) {
+				this.userType = "user";
+				do {
+					System.out.println("Enter 1 for regular account, 2 for joint account");
+					userIn = input.nextLine();
+				}while (!userIn.equals("1") &&! userIn.equals("2"));
+				if (userIn.equals("1")) {
+					this.accountType = "regular";
+				}else {
+					this.accountType = "joint";
+				}
+				
+		
+			}else {
+				this.userType = "employee";
+			}
+			System.out.println("Congratulation! You have submitted you registration form. Please wait for aproval!");
+			input.close();
+			
+			
+			
+		} catch (UserNameAlreadyExistException e) {
+			e.getMessage();
+		}
+	}
 	
 }
