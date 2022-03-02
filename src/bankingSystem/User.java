@@ -2,11 +2,16 @@ package bankingSystem;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class User {
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public String name = "";
 	private String password = "";
 	
@@ -45,6 +50,7 @@ public class User {
 		
 		ArrayList<String> withdrawHistory = new ArrayList<>(Arrays.asList("withdraw",withdrawAmountString));
 		history.add(withdrawHistory);
+		System.out.println("withdraw done");
 		input.close();
 		
 	}
@@ -63,9 +69,11 @@ public class User {
 		String depositAmountString = String.valueOf(depositAmount);
 		ArrayList<String> depositHistory = new ArrayList<>(Arrays.asList("deposit",depositAmountString));
 		history.add(depositHistory);
+		System.out.println("deposited done");
 		input.close();
 	}
-	//TODO bring up target object
+
+	
 	public void transfer() {
 		
 		Scanner input = new Scanner(System.in);
@@ -102,6 +110,7 @@ public class User {
 		
 		ArrayList<String> transferHistory = new ArrayList<>(Arrays.asList("transfer",tranferAmountString,targetName));
 		history.add(transferHistory);
+		System.out.println("transfer done");
 		input.close();
 	}
 	public void receiveTransfer(double receivedAmount, String sender) {		
@@ -111,12 +120,7 @@ public class User {
 		ArrayList<String> receiveHistory = new ArrayList<>(Arrays.asList("receive",receivedAmountString,sender));
 		history.add(receiveHistory);
 	}
-	
-	public User(RegistrationForm myForm) {
-		this.name = myForm.getuserName();
-		this.setPassword(myForm.getPassward());
-		this.accountType = myForm.accountType;
-	}
+
 	
 	public static void logIntoSystem(User myUser) {
 		try {
@@ -134,28 +138,25 @@ public class User {
 	public static void deleteFromSystem(User myUser) {
 		try {
 		//delete file
-		String path = myUser.name+"User.ser";
-		File targetFile = new File(path);
-		targetFile.delete();
-		
-		//delete from list
-		ArrayList<String> targetArrayList = ReadListFromFile.read("userList.txt");
-		targetArrayList.remove(myUser.name);
-		WriteListToFile.write(targetArrayList, "userList.txt");
-		
-		System.out.println(myUser.name + " deleted from system");
+			String path = myUser.name+"User.ser";
+			File targetFile = new File(path);
+			targetFile.delete();
+			
+			//delete from list
+			ArrayList<String> targetArrayList = ReadListFromFile.read("userList.txt");
+			targetArrayList.remove(myUser.name);
+			WriteListToFile.write(targetArrayList, "userList.txt");
+			
+			System.out.println(myUser.name + " deleted from system");
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
+	
 	}
 	
 	@Override
 	public String toString() {
-		return ("userName: " + this.name +System.getProperty("line.separator")+"accountType: " + this.accountType + System.getProperty("line.separator") + "history " + history);
+		return ("userName: " + this.name +System.getProperty("line.separator")+"accountType: " + this.accountType + System.getProperty("line.separator") + "balance: " + this.amount + System.getProperty("line.separator") + "history " + history);
 	}
 
 }
