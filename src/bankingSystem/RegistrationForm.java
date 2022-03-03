@@ -15,7 +15,7 @@ public class RegistrationForm implements Serializable{
 	private String userName = "";	
 	private String passward = "";
 	public String accountType = "";//regular or joint
-	public String userType = "";//user or employee
+	public String userType = "";//user or employee or admin
 	
 
 	public String getPassward() {
@@ -30,17 +30,8 @@ public class RegistrationForm implements Serializable{
 	}
 	
 	// uses ReadExistingUser class to check if userName entered is in system or not
-	public void setUserName (String userInputName) throws UserNameAlreadyExistException{
-		
-		ArrayList<String> existingUserName = ReadListFromFile.read("userList.txt");
-		ArrayList<String> existingEmployeeName = ReadListFromFile.read("employeeList.txt");
-		ArrayList<String> existingRegistrationName = ReadListFromFile.read("registrationList.txt");
-		
-		if (existingUserName.contains(userInputName) || existingEmployeeName.contains(userInputName) || existingRegistrationName.contains(userInputName)) { 
-			throw new UserNameAlreadyExistException("userName already exist!");
-		}else {		
+	public void setUserName (String userInputName){
 		this.userName = userInputName;
-		}	
 	}
 	@Override
 	public String toString() {
@@ -49,45 +40,72 @@ public class RegistrationForm implements Serializable{
 	
 	
 	
-	public RegistrationForm() {
+	public RegistrationForm(Scanner input) {
 		
-		try {
-			System.out.println("Welcome to Registraton");
+		System.out.println(System.getProperty("line.separator"));
+		System.out.println("Welcome to Registraton");
+
+		
+		ArrayList<String> existingUserName = ReadListFromFile.read("userList.txt");
+		ArrayList<String> existingEmployeeName = ReadListFromFile.read("employeeList.txt");
+		ArrayList<String> existingRegistrationName = ReadListFromFile.read("registrationList.txt");
+		String inputName = "";
+		
+		do {
 			System.out.println("Please Enter a userName");
-			Scanner input = new Scanner(System.in);
-			this.setUserName(input.nextLine());
-			System.out.println("Please Enter a password");
-			this.setPassward(input.nextLine());
-			String userIn;
+			inputName = input.nextLine();				
+			if(existingUserName.contains(inputName) || existingEmployeeName.contains(inputName) || existingRegistrationName.contains(inputName)) {
+				System.out.println("duplicated name, please enter a new one");
+			}				
+		} while (existingUserName.contains(inputName) || existingEmployeeName.contains(inputName) || existingRegistrationName.contains(inputName));
+		this.setUserName(inputName);
+		
+		System.out.println("Please Enter a password");
+		this.setPassward(input.nextLine());
+		String userIn="";
+		do {
+			System.out.println("1 for user account"+System.getProperty("line.separator")+"2 for Employee account"+System.getProperty("line.separator")+ "3 for Admin account");
+			userIn = input.nextLine();
+			
+			if (!userIn.equals("1") && !userIn.equals("2") && !userIn.equals("3")) {
+				System.out.println("invalid input");
+			}
+			
+		}while (!userIn.equals("1") && !userIn.equals("2") && !userIn.equals("3"));
+		
+		switch (userIn) {
+		case "1":
+			this.userType = "user";
 			do {
-				System.out.println("Enter 1 for user account, 2 for Employee account");
+				System.out.println("1 for regular account"+System.getProperty("line.separator")+"2 for joint account");
+
 				userIn = input.nextLine();
-				
+				if (!userIn.equals("1") &&! userIn.equals("2")) {
+					System.out.println("invalid input");
+				}
 			}while (!userIn.equals("1") &&! userIn.equals("2"));
 			if (userIn.equals("1")) {
-				this.userType = "user";
-				do {
-					System.out.println("Enter 1 for regular account, 2 for joint account");
-					userIn = input.nextLine();
-				}while (!userIn.equals("1") &&! userIn.equals("2"));
-				if (userIn.equals("1")) {
-					this.accountType = "regular";
-				}else {
-					this.accountType = "joint";
-				}
-				
-		
+				this.accountType = "regular";
 			}else {
-				this.userType = "employee";
+				this.accountType = "joint";
 			}
-			System.out.println("Congratulation! You have submitted you registration form. Please wait for aproval!");
-			input.close();
 			
+			break;
+		case "2":
+			this.userType = "employee";
 			
+			break;
+		case "3":
+			this.userType = "admin";
 			
-		} catch (UserNameAlreadyExistException e) {
-			e.getMessage();
+			break;
+
+
 		}
+		System.out.println("Congratulation! You have submitted you registration form. Please wait for aproval!");
+		input.close();
+		
+
 	}
 	public static void logIntoSystem(RegistrationForm myForm) {
 		try {

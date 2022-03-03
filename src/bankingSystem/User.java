@@ -2,21 +2,18 @@ package bankingSystem;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class User implements Serializable{
+public class User extends GeneralClass{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public String name = "";
+
 	private String password = "";
-	
-	public String accountType = "";
-	
+
 	public double amount = 0;
 	public ArrayList<ArrayList<String>> history = new ArrayList<>();
 	// withdraw history arrayList [withdraw,amount]
@@ -31,9 +28,8 @@ public class User implements Serializable{
 		this.password = password;
 	}
 	
-	public void withdraw() {
+	public void withdraw(Scanner input) {
 		
-		Scanner input = new Scanner(System.in);
 		double withdrawAmount;
 		
 		do {
@@ -51,13 +47,11 @@ public class User implements Serializable{
 		ArrayList<String> withdrawHistory = new ArrayList<>(Arrays.asList("withdraw",withdrawAmountString));
 		history.add(withdrawHistory);
 		System.out.println("withdraw done");
-		input.close();
 		
 	}
 	
-	public void deposit() {
+	public void deposit(Scanner input) {
 		
-		Scanner input = new Scanner(System.in);
 		double depositAmount;
 		
 		do {
@@ -70,13 +64,11 @@ public class User implements Serializable{
 		ArrayList<String> depositHistory = new ArrayList<>(Arrays.asList("deposit",depositAmountString));
 		history.add(depositHistory);
 		System.out.println("deposited done");
-		input.close();
 	}
 
 	
-	public void transfer() {
+	public void transfer(Scanner input) {
 		
-		Scanner input = new Scanner(System.in);
 		double transferAmount;
 		
 		do {
@@ -111,7 +103,7 @@ public class User implements Serializable{
 		ArrayList<String> transferHistory = new ArrayList<>(Arrays.asList("transfer",tranferAmountString,targetName));
 		history.add(transferHistory);
 		System.out.println("transfer done");
-		input.close();
+
 	}
 	public void receiveTransfer(double receivedAmount, String sender) {		
 		
@@ -153,7 +145,57 @@ public class User implements Serializable{
 		}
 	
 	}
-	
+	public void UI(Scanner input) {
+
+		String userInputString = "";
+		do {
+			do {
+				System.out.println(System.getProperty("line.separator"));
+				System.out.println("select what you want to do");
+				System.out.println("1 for withdraw" +System.getProperty("line.separator")+ "2 for deposit" +System.getProperty("line.separator")+ "3 for transfer" +System.getProperty("line.separator")+ "4 for view your account"+System.getProperty("line.separator")+"5 for log off");
+				if (input.hasNextLine()){
+					userInputString = input.nextLine();	
+				}
+				if(!(userInputString.equals("1") || userInputString.equals("2") || userInputString.equals("3") || userInputString.equals("4")|| userInputString.equals("5"))) {
+					System.out.println("invalid input");
+				}
+				}while(!(userInputString.equals("1") || userInputString.equals("2") || userInputString.equals("3") || userInputString.equals("4")|| userInputString.equals("5")));
+			
+			switch (userInputString) {
+			
+			case "1":
+				
+				this.withdraw(input);
+				break;
+
+			case "2":
+				
+				this.deposit(input);				
+				break;
+				
+			case "3":
+				
+				this.transfer(input);					
+				break;
+				
+			case "4":
+				
+				System.out.println(this.toString());								
+				break;
+			}
+
+			
+		} while (! userInputString.equals("5"));
+		try {
+			WriteObjectToFile.write(this, this.name+"User.ser");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	System.out.println("you have logged off");
+		
+		
+		
+	}
 	@Override
 	public String toString() {
 		return ("userName: " + this.name +System.getProperty("line.separator")+"accountType: " + this.accountType + System.getProperty("line.separator") + "balance: " + this.amount + System.getProperty("line.separator") + "history " + history);
