@@ -49,15 +49,16 @@ public class RegistrationForm implements Serializable{
 		ArrayList<String> existingUserName = ReadListFromFile.read("userList.txt");
 		ArrayList<String> existingEmployeeName = ReadListFromFile.read("employeeList.txt");
 		ArrayList<String> existingRegistrationName = ReadListFromFile.read("registrationList.txt");
+		ArrayList<String> existingAdminName = ReadListFromFile.read("adminList.txt");
 		String inputName = "";
 		
 		do {
 			System.out.println("Please Enter a userName");
 			inputName = input.nextLine();				
-			if(existingUserName.contains(inputName) || existingEmployeeName.contains(inputName) || existingRegistrationName.contains(inputName)) {
-				System.out.println("duplicated name, please enter a new one");
+			if(existingUserName.contains(inputName) || existingEmployeeName.contains(inputName) || existingRegistrationName.contains(inputName)||existingAdminName.contains(inputName)) {
+				System.out.println("usename already exist, please enter a new one");
 			}				
-		} while (existingUserName.contains(inputName) || existingEmployeeName.contains(inputName) || existingRegistrationName.contains(inputName));
+		} while (existingUserName.contains(inputName) || existingEmployeeName.contains(inputName) || existingRegistrationName.contains(inputName)||existingAdminName.contains(inputName));
 		this.setUserName(inputName);
 		
 		System.out.println("Please Enter a password");
