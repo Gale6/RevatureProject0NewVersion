@@ -42,7 +42,7 @@ public class RegistrationForm implements Serializable{
 	
 	public RegistrationForm(Scanner input) {
 		
-		System.out.println(System.getProperty("line.separator"));
+		System.out.println("***********************************************");
 		System.out.println("Welcome to Registraton");
 
 		
@@ -104,7 +104,6 @@ public class RegistrationForm implements Serializable{
 
 		}
 		System.out.println("Congratulation! You have submitted you registration form. Please wait for aproval!");
-		input.close();
 		
 
 	}

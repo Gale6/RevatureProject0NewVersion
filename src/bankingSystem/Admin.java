@@ -84,7 +84,7 @@ public class Admin extends GeneralClass{
 		String userInputString = "";
 		do {
 			do {
-				System.out.println(System.getProperty("line.separator"));
+				System.out.println("***********************************************");
 				System.out.println("select what you want to do");
 				System.out.println("1 for act on RegistrationForm" +System.getProperty("line.separator")+ "2 for act on accounts"+System.getProperty("line.separator")+ "3 for log off");
 				if (input.hasNextLine()){
@@ -101,6 +101,7 @@ public class Admin extends GeneralClass{
 			System.out.println(myArrayList);
 			String targetString = "";
 			do {
+				System.out.println("***********************************************");
 				System.out.println("please enter the name of registration you want to act on");
 				targetString = input.nextLine();
 				if(!myArrayList.contains(targetString)) {
@@ -110,6 +111,7 @@ public class Admin extends GeneralClass{
 			String path = targetString +"RegistrationForm.ser";
 			RegistrationForm myForm = (RegistrationForm) ReadObjectFromFile.read(path);
 			do {
+				System.out.println("***********************************************");
 				System.out.println("please enter you decision" +System.getProperty("line.separator")+ "1 for approve"+System.getProperty("line.separator")+"2 for deny");
 				userInputString = input.nextLine();
 				if (!(userInputString.equals("1") || userInputString.equals("2"))) {
@@ -129,6 +131,7 @@ public class Admin extends GeneralClass{
 		case "2":
 			String actOnAccountIn = "";
 			do {				
+				System.out.println("***********************************************");
 				System.out.println("select what type of account you want to act on"  +System.getProperty("line.separator")+ "1.user" +System.getProperty("line.separator")+"2.employee"+System.getProperty("line.separator")+"3.admin");
 				actOnAccountIn = input.nextLine();
 				if (!(actOnAccountIn.equals("1") || actOnAccountIn.equals("2") || actOnAccountIn.equals("3"))) {
@@ -142,6 +145,7 @@ public class Admin extends GeneralClass{
 				System.out.println("user list:" + userList);
 				
 				do {					
+					System.out.println("***********************************************");
 					System.out.println("please enter userName of the user you want to see");
 					actOnAccountIn = input.nextLine();
 					if (!userList.contains(actOnAccountIn)) {
@@ -152,6 +156,7 @@ public class Admin extends GeneralClass{
 				User myUser = (User) ReadObjectFromFile.read(actOnAccountIn+"User.ser");
 				do {
 					do {
+						System.out.println("***********************************************");
 						System.out.println("you are now in the account");
 						System.out.println("select want you want to do" +System.getProperty("line.separator")+ "1 for view info" +System.getProperty("line.separator")+ "2 for use the account" +System.getProperty("line.separator")+"3 for delete the account" +System.getProperty("line.separator")+"4 for exit this account");
 						actOnAccountIn = input.nextLine();
@@ -182,10 +187,12 @@ public class Admin extends GeneralClass{
 				System.out.println("employee list:" +employeeList);
 				
 				do {					
+					System.out.println("***********************************************");
 					System.out.println("please enter userName of the employee you want to see");
 					actOnAccountIn = input.nextLine();
 					if (!employeeList.contains(actOnAccountIn)) {
 						System.out.println("invalid name");
+						System.out.println("***********************************************");
 					}					
 				}while(!employeeList.contains(actOnAccountIn));
 				
@@ -193,6 +200,7 @@ public class Admin extends GeneralClass{
 				
 				do {
 					do {
+						System.out.println("***********************************************");
 						System.out.println("you are now in the account");
 						System.out.println("select want you want to do" +System.getProperty("line.separator")+ "1 for view info" +System.getProperty("line.separator")+ "2 for use the account" +System.getProperty("line.separator")+"3 for delete the account" +System.getProperty("line.separator")+"4 for exit this account");
 						actOnAccountIn = input.nextLine();
@@ -225,10 +233,12 @@ public class Admin extends GeneralClass{
 				System.out.println("admin list:" +adminList);
 				
 				do {					
+					System.out.println("***********************************************");
 					System.out.println("please enter userName of the admin you want to see");
 					actOnAccountIn = input.nextLine();
 					if (!adminList.contains(actOnAccountIn)) {
 						System.out.println("invalid name");
+						System.out.println("***********************************************");
 					}					
 				}while(!adminList.contains(actOnAccountIn));
 				
@@ -236,7 +246,9 @@ public class Admin extends GeneralClass{
 				
 				do {
 					do {
+						System.out.println("***********************************************");
 						System.out.println("you are now in the account");
+						System.out.println("***********************************************");
 						System.out.println("select want you want to do" +System.getProperty("line.separator")+ "1 for view info" +System.getProperty("line.separator")+ "2 for use the account" +System.getProperty("line.separator")+"3 for delete the account" +System.getProperty("line.separator")+"4 for exit this account");
 						actOnAccountIn = input.nextLine();
 						if (!(actOnAccountIn.equals("1") || actOnAccountIn.equals("2") || actOnAccountIn.equals("3")|| actOnAccountIn.equals("4"))) {
@@ -255,6 +267,7 @@ public class Admin extends GeneralClass{
 						break;
 					case "3":
 						Admin.deleteFromSystem(myAdmin);
+						actOnAccountIn ="4";
 						
 						break;
 					}

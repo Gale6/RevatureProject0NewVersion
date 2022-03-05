@@ -16,10 +16,10 @@ public class User extends GeneralClass{
 
 	public double amount = 0;
 	public ArrayList<ArrayList<String>> history = new ArrayList<>();
-	// withdraw history arrayList [withdraw,amount]
-	//deposit history arraryList [deposit,amount]
-	// transfer history arrayList [transfer, amount, target]
-	//Receive history arrayList[receive, amount, sender]
+	// withdraw history arrayList [withdraw,amount,time]
+	//deposit history arraryList [deposit,amount,time]
+	// transfer history arrayList [transfer, amount, target,time]
+	//Receive history arrayList[receive, amount, sender,time]
 	
 	public String getPassword() {
 		return password;
@@ -33,10 +33,12 @@ public class User extends GeneralClass{
 		double withdrawAmount;
 		
 		do {
+			System.out.println("***********************************************");
 			System.out.println("please enter withdraw amount");
 			withdrawAmount = Double.parseDouble(input.nextLine());
 			if (withdrawAmount > amount) {
 				System.out.println("Insufficient balance, you can only withdraw what you have");
+				System.out.println("***********************************************");
 			}
 			
 		} while (withdrawAmount > amount);
@@ -44,9 +46,10 @@ public class User extends GeneralClass{
 		this.amount -= withdrawAmount;
 		String withdrawAmountString = String.valueOf(withdrawAmount);
 		
-		ArrayList<String> withdrawHistory = new ArrayList<>(Arrays.asList("withdraw",withdrawAmountString));
+		ArrayList<String> withdrawHistory = new ArrayList<>(Arrays.asList("withdraw",withdrawAmountString,Time.timeNow()));
 		history.add(withdrawHistory);
 		System.out.println("withdraw done");
+
 		
 	}
 	
@@ -55,15 +58,17 @@ public class User extends GeneralClass{
 		double depositAmount;
 		
 		do {
+			System.out.println("***********************************************");
 			System.out.println("please enter a valid deposit amount");
 			depositAmount = Double.parseDouble(input.nextLine());
 		}while(depositAmount<0);
 				
 		this.amount += depositAmount;
 		String depositAmountString = String.valueOf(depositAmount);
-		ArrayList<String> depositHistory = new ArrayList<>(Arrays.asList("deposit",depositAmountString));
+		ArrayList<String> depositHistory = new ArrayList<>(Arrays.asList("deposit",depositAmountString,Time.timeNow()));
 		history.add(depositHistory);
 		System.out.println("deposited done");
+
 	}
 
 	
@@ -100,7 +105,7 @@ public class User extends GeneralClass{
 		this.amount -= transferAmount;
 		String tranferAmountString = String.valueOf(transferAmount);
 		
-		ArrayList<String> transferHistory = new ArrayList<>(Arrays.asList("transfer",tranferAmountString,targetName));
+		ArrayList<String> transferHistory = new ArrayList<>(Arrays.asList("transfer",tranferAmountString,targetName,Time.timeNow()));
 		history.add(transferHistory);
 		System.out.println("transfer done");
 
@@ -109,7 +114,7 @@ public class User extends GeneralClass{
 		
 		this.amount += receivedAmount;
 		String receivedAmountString = String.valueOf(receivedAmount);
-		ArrayList<String> receiveHistory = new ArrayList<>(Arrays.asList("receive",receivedAmountString,sender));
+		ArrayList<String> receiveHistory = new ArrayList<>(Arrays.asList("receive",receivedAmountString,sender,Time.timeNow()));
 		history.add(receiveHistory);
 	}
 
@@ -150,8 +155,9 @@ public class User extends GeneralClass{
 		String userInputString = "";
 		do {
 			do {
-				System.out.println(System.getProperty("line.separator"));
+				System.out.println("***********************************************");
 				System.out.println("select what you want to do");
+				System.out.println("***********************************************");
 				System.out.println("1 for withdraw" +System.getProperty("line.separator")+ "2 for deposit" +System.getProperty("line.separator")+ "3 for transfer" +System.getProperty("line.separator")+ "4 for view your account"+System.getProperty("line.separator")+"5 for log off");
 				if (input.hasNextLine()){
 					userInputString = input.nextLine();	
@@ -191,7 +197,7 @@ public class User extends GeneralClass{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	System.out.println("you have logged off");
+
 		
 		
 		

@@ -72,14 +72,15 @@ public class Employee extends GeneralClass {
 		String userInputString = "";
 		do {
 			do {
-				System.out.println(System.getProperty("line.separator"));
+				System.out.println("***********************************************");
 				System.out.println("select what you want to do");
 				System.out.println("1 for view all users" +System.getProperty("line.separator")+ "2 for view an user's account information"+System.getProperty("line.separator")+ "3 for act on RegistrationForm" +System.getProperty("line.separator")+"4 for log off");
 				if (input.hasNextLine()){
 					userInputString = input.nextLine();	
 				}
 				if(!(userInputString.equals("1") || userInputString.equals("2") || userInputString.equals("3")|| userInputString.equals("4"))) {
-					System.out.println("invalid input");
+					System.out.println("invalid input please enter between 1,2,and 3");
+					System.out.println("***********************************************");
 				}
 				}while(!(userInputString.equals("1") || userInputString.equals("2") || userInputString.equals("3")|| userInputString.equals("4")));
 			switch (userInputString) {
@@ -94,10 +95,12 @@ public class Employee extends GeneralClass {
 				ArrayList<String> userList = this.viewExistingUser();
 				System.out.println("userList: " + userList);
 				do {					
+					System.out.println("***********************************************");
 					System.out.println("please enter userName of the user you want to see");
 					targetName = input.nextLine();
 					if (!userList.contains(targetName)) {
 						System.out.println("invalid name");
+						System.out.println("***********************************************");
 					}					
 				}while(!userList.contains(targetName));
 				
@@ -108,6 +111,7 @@ public class Employee extends GeneralClass {
 				System.out.println(myArrayList);
 				String targetString = "";
 				do {
+					System.out.println("***********************************************");
 					System.out.println("please enter the name of registration you want to act on");
 					targetString = input.nextLine();
 					if(!myArrayList.contains(targetString)) {
